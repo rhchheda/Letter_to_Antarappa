@@ -815,7 +815,7 @@
     const lb = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const cap = document.getElementById('lightbox-caption');
-    img.src = `https://drive.google.com/thumbnail?id=$1Ps55Bs6ZMeqVAfLfhpQhbX96ORvcuq-c&sz=w900`;
+    img.src = `https://drive.google.com/thumbnail?id=${driveId}&sz=w900`;
     img.onerror = () => { img.src = ''; img.alt = 'Secure Drive Asset Map Active'; };
     cap.textContent = caption;
     lb.classList.add('active');
