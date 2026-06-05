@@ -28,6 +28,7 @@
     --photo-18: "1r-nXGMqTYLCFgSqcJq1nWR9SczpB_-j0"; /* Museum */
     --photo-19: "1ZkGHMiA8VlaUZNGaC-54mtgVwYy3LEib"; /* Antarappa Feeds Dadu */
     --photo-20: "1fQo7x7JjZPCDgJQ1Fhzn1LHRLz_CRDjf"; /* Graduation */
+    --photo-21: "1ecwIRDy3rq0lTI4JeyIfddPSSqE4-1U5"; /* ChatGPT Message */
 
     --bg-main: #fffdf6;       /* Warm sunny cream */
     --card-bg: #ffffff;
@@ -36,7 +37,7 @@
     --primary: #ffb7b2;       /* Pastel Blush Pink */
     --secondary: #b5ead7;     /* Pastel Mint Green */
     --accent: #ffdac1;        /* Pastel Peach */
-    --highlight: #e2f0cb;     /* Pastel Lime Lime */
+    --highlight: #e2f0cb;     /* Pastel Lime */
     --sky: #c7ceea;           /* Pastel Lavender Sky */
   }
 
@@ -52,6 +53,8 @@
     color: var(--text-main);
     line-height: 1.8;
     padding: 40px 20px;
+    position: relative;
+    overflow-x: hidden;
   }
 
   .letter-box {
@@ -100,6 +103,12 @@
     margin-top: 40px;
     margin-bottom: 12px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.03);
+    animation: badgeFloat 4s ease-in-out infinite alternate;
+  }
+  
+  @keyframes badgeFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
   }
   
   .section-title {
@@ -195,8 +204,68 @@
     border: 2px dashed #e4dec9;
     border-radius: 10px;
     gap: 6px;
+    transition: all 0.3s ease;
   }
   .photo-placeholder span { font-size: 26px; }
+
+  /* AI Reflection Placeholder */
+  .ai-placeholder {
+    background: linear-gradient(135deg, #f5f0fa, #eef3fc) !important;
+    border: 2px dashed #b1a0c7 !important;
+    color: #5b4a78 !important;
+    position: relative;
+    overflow: hidden;
+    height: 190px;
+  }
+  .ai-placeholder::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(199, 206, 234, 0.25) 0%, transparent 65%);
+    animation: pulseGlow 8s infinite linear;
+    pointer-events: none;
+  }
+  @keyframes pulseGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .ai-chip {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--sky);
+    color: #4f556b;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  .ai-placeholder-icon {
+    font-size: 32px !important;
+    margin-bottom: 4px;
+    animation: bounceSlow 3s infinite ease-in-out;
+  }
+  @keyframes bounceSlow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .ai-placeholder-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .ai-placeholder-desc {
+    font-size: 11px;
+    opacity: 0.8;
+    text-align: center;
+    padding: 0 20px;
+    line-height: 1.4;
+  }
 
   /* ── COZY CLOUD THOUGHT BUBBLES ── */
   .thought-bubble {
@@ -226,6 +295,126 @@
   }
   .sticky-cloud-icon { font-size: 24px; }
   .sticky-cloud-text { font-size: 14px; color: #535c7c; }
+
+  /* ── MEMORY CAROUSEL SCRAPBOOK ── */
+  .scrapbook-section {
+    margin: 50px 0 20px 0;
+    text-align: center;
+    position: relative;
+  }
+  .carousel-container {
+    position: relative;
+    margin: 25px 0;
+  }
+  .carousel-track-wrapper {
+    overflow: hidden;
+    position: relative;
+    border-radius: 24px;
+    background: #fbf9f2;
+    border: 1px solid #f0e9d6;
+    padding: 15px 0;
+  }
+  .carousel-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 20px 24px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Hide scrollbar */
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+  .carousel-track {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .carousel-card {
+    flex: 0 0 240px;
+    scroll-snap-align: center;
+    cursor: pointer;
+    perspective: 1000px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .carousel-card:nth-child(4n+1) .memory-wrapper { transform: rotate(-1.5deg); }
+  .carousel-card:nth-child(4n+2) .memory-wrapper { transform: rotate(1deg); }
+  .carousel-card:nth-child(4n+3) .memory-wrapper { transform: rotate(-1deg); }
+  .carousel-card:nth-child(4n+4) .memory-wrapper { transform: rotate(2deg); }
+
+  .carousel-card:hover {
+    transform: scale(1.05) translateY(-5px);
+    z-index: 5;
+  }
+  .carousel-card:hover .memory-wrapper {
+    transform: rotate(0deg);
+    box-shadow: 0 15px 35px rgba(130, 110, 90, 0.25);
+  }
+  
+  /* Carousel Navigation Buttons */
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: #ffffff;
+    border: 3px solid #ffffff;
+    color: var(--text-main);
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 15px rgba(160, 130, 90, 0.2);
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  .carousel-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+  }
+  .carousel-btn.prev {
+    left: -12px;
+  }
+  .carousel-btn.next {
+    right: -12px;
+  }
+  
+  /* Indicators */
+  .carousel-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+  }
+  .indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #e4dec9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .indicator-dot.active {
+    background: var(--primary);
+    width: 24px;
+    border-radius: 4px;
+  }
+  
+  .carousel-info {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 10px;
+    display: inline-block;
+  }
 
   /* ── SIGN-OFF BLOCK ── */
   .cozy-footer {
@@ -301,6 +490,10 @@
     .memory-row { flex-direction: column; align-items: center; }
     .memory-row .memory-card { max-width: 100%; width: 100%; }
     .lightbox-container { max-width: 90vw; }
+    .carousel-btn { width: 38px; height: 38px; font-size: 16px; }
+    .carousel-btn.prev { left: -5px; }
+    .carousel-btn.next { right: -5px; }
+    .ai-placeholder { height: 210px; }
   }
 </style>
 </head>
@@ -336,7 +529,7 @@
     <h2 class="section-title">🎈 The Girl I Have Always Known</h2>
     <p>Do you remember, Antarappa — every time you got chocolate, chips, KurKure — you always quietly kept one aside for Dadu. Without being told. Without anyone asking. That small girl who thought of others before herself — that is the person I know.</p>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-01'), 'Little Antarappa — baby Krishna, full of joy 🪔')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-01'), 'Little Antarappa — baby Krishna, full of joy 🪔', event)">
       <div class="memory-wrapper">
         <script>window.renderImg = (id) => `<img src="https://drive.google.com/thumbnail?id=${id}&sz=w800" onerror="this.parentNode.innerHTML='<div class=\\'photo-placeholder\\'><span>📷</span>Secure Image Asset<br><small>Drive ID: ${id}</small></div>'">`</script>
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-01').replace(/"/g, '').trim()))</script>
@@ -347,13 +540,13 @@
     <p>Look at that smile. That little one dressed as Krishna — full of light, full of life. Even then, anyone who saw you knew — this child has something special.</p>
 
     <div class="memory-row">
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-02'), 'Your very first birthday — Dadu was right there 🎂')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-02'), 'Your very first birthday — Dadu was right there 🎂', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-02').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">Your first birthday! 🎂</div>
         </div>
       </div>
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-11'), 'Art by Antarappa — creativity always yours 🎨')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-11'), 'Art by Antarappa — creativity always yours 🎨', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-11').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">Creativity always yours 🎨</div>
@@ -361,7 +554,7 @@
       </div>
     </div>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-12'), 'The photo frame you made — \&quot;Family. Sweet Memories.\&quot; 🖼')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-12'), 'The photo frame you made — \&quot;Family. Sweet Memories.\&quot; 🖼', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-12').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">The frame you made — "Family. Sweet Memories." 🖼</div>
@@ -370,7 +563,7 @@
 
     <p>You made this by hand. "Family. Sweet Memories." — those were your words, your choice, your craft. The person who made this frame loves her family deeply. I have never forgotten that.</p>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-13'), 'Your handwritten birthday card to Mummy 💛')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-13'), 'Your handwritten birthday card to Mummy 💛', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-13').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">Your handwritten birthday card to Mummy 💛</div>
@@ -384,13 +577,13 @@
     <p>You wrote that, Antarappa. In your own hand. Those were not just words — that was your heart. That heart is still there. I know it.</p>
 
     <div class="memory-row">
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-16'), 'Taluk Rank Winner — your brilliance recognised 🥇')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-16'), 'Taluk Rank Winner — your brilliance recognised 🥇', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-16').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">Taluk Rank Winner 🥇</div>
         </div>
       </div>
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-04'), 'RPL Season 4 Winners — May 2025 🏆')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-04'), 'KPL Season 4 Winners — May 2025 🏆', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-04').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">Lifting that trophy! 🏆</div>
@@ -398,14 +591,14 @@
       </div>
     </div>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-15'), 'Constitution Day poster — Nov 2024, your thoughtful artwork 🇮🇳')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-15'), 'Constitution Day poster — Nov 2024, your thoughtful artwork 🇮🇳', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-15').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">Constitution Day — your artwork 🇮🇳</div>
       </div>
     </div>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-14'), 'Your rangoli — patience, artistry, tradition 🪔')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-14'), 'Your rangoli — patience, artistry, tradition 🪔', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-14').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">Your rangoli — chosen with care 🪔</div>
@@ -419,7 +612,7 @@
     <p>I think about our family a lot, Antarappa. And I want to tell you something I rarely say out loud.</p>
     <p>Mummy — waking up at 5am or 6am every single morning. Quietly making my Tiffin before I even opened my eyes. Not once complaining. Papa — sometimes walking me to the nearest bus stop before his own day began. Then I would take my bicycle to college — through whatever weather, whatever tiredness.</p>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-17'), 'Our family — together always, through everything 💙')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-17'), 'Our family — together always, through everything 💙', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-17').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">Our family — together always, through everything 💙</div>
@@ -428,7 +621,7 @@
 
     <p>And then came the accident. I still think about the tears you all shed that day. It was after that — Mummy decided. We will get him a scooter. That decision came from love.That scooter was not a gift. It was a prayer on wheels — from a mother who could not afford to imagine the alternative.</p>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-05'), 'The scooter puja — Mummy, you, and a family\'s love 🛵')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-05'), 'The scooter puja — Mummy, you, and a family\'s love 🛵', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-05').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">The scooter puja — pure love 🛵</div>
@@ -442,7 +635,7 @@
       </div>
     </div>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-03'), 'October 2, 2025 — the phone gifted, in trust 📱')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-03'), 'October 2, 2025 — the phone gifted, in trust 📱', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-03').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">October 2, 2025 — Gifted in trust 📱</div>
@@ -453,7 +646,7 @@
 
     <span class="section-badge">Part Four</span>
     <h2 class="section-title">🎓 Where Dadu Stands Today</h2>
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-20'), 'Convocation Day — the result of every 5am Tiffin 🎓')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-20'), 'Convocation Day — the result of every 5am Tiffin 🎓', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-20').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">Convocation Day — every 5am Tiffin led here 🎓</div>
@@ -463,13 +656,13 @@
     <p>That convocation gown. That degree. Mummy's 5am mornings made that day possible. Papa's walks to the bus stop made that day possible. Your support — being there, being you — made that day possible.</p>
 
     <div class="memory-row">
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-18'), 'Science museum — May 2024, curious and together 🔬')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-18'), 'Science museum — May 2024, curious and together 🔬', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-18').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">Science museum trips 🔬</div>
         </div>
       </div>
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-19'), 'Dadu cake — love without being told 🎂')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-19'), 'Dadu cake — love without being told 🎂', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-19').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">Dadu giving cake! 🎂</div>
@@ -485,6 +678,18 @@
     <span class="section-badge">Part Five</span>
     <h2 class="section-title">💌 What I Need You to Hear</h2>
     <p>You were aiming for CA, Antarappa. That showed real ambition and I was genuinely proud. Now it is BBA. I am not saying it is wrong.</p>
+
+    <p>And yes — I saw that message where you used ChatGPT to frame your thoughts. I am not upset about that. These tools are powerful and I use them too. But here is the thing — AI can help you articulate what you already think. It cannot think for you. Use it to sharpen your ideas, to research, to write better — not to borrow someone else's conviction.</p>
+
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-21'), 'ChatGPT Message — borrow tools, not conviction 🤖', event)">
+      <div class="memory-wrapper">
+        <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-21').replace(/"/g, '').trim()))</script>
+        <div class="memory-caption">ChatGPT Message — borrow tools, not conviction 🤖</div>
+      </div>
+    </div>
+
+    <p>The day you let a tool decide what you believe, you have handed away the most valuable thing you own — your own mind.</p>
+
     <p>But I want you to sit quietly — just once — and ask yourself one honest question:</p>
 
     <div class="thought-bubble" style="border-color: var(--accent);">
@@ -494,7 +699,7 @@
     <p>The people we spend time with shape our thinking more than we realise. Sometimes quietly. Sometimes without us noticing. Your circle, your friendships — they are not neutral. They leave fingerprints on your goals.</p>
     <p>And about feelings — the closeness, the attachment — I am not here to shame you. Those feelings are real, I understand that. But when the heart gets deeply attached, the mind quietly steps aside. That is what worries me. Not your character. Never your character.</p>
 
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-08'), 'You, Dadu, and family — always in your corner 🤝')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-08'), 'You, Dadu, and family — always in your corner 🤝', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-08').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">Always in your corner 🤝</div>
@@ -508,7 +713,7 @@
 
     <span class="section-badge">Part Six</span>
     <h2 class="section-title">✨ Coming Home</h2>
-    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-09'), 'Completing the puzzle together — June 2024 🧩')">
+    <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-09'), 'Completing the puzzle together — June 2024 🧩', event)">
       <div class="memory-wrapper">
         <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-09').replace(/"/g, '').trim()))</script>
         <div class="memory-caption">Completing the puzzle together 🧩</div>
@@ -519,13 +724,13 @@
     <p>The rules are not forever. They are doors, not walls. Every door opens when trust is rebuilt. And I believe — I genuinely believe — you are capable of that.</p>
 
     <div class="memory-row">
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-10'), 'Waterpark — May 2024 🌊')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-10'), 'Waterpark — May 2024 🌊', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-10').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">Waterpark fun! 🌊</div>
         </div>
       </div>
-      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-06'), 'Raksha Bandhan — the bond that does not break 🌺')">
+      <div class="memory-card" onclick="openLightbox(getPhotoId('--photo-06'), 'Raksha Bandhan — the bond that does not break 🌺', event)">
         <div class="memory-wrapper">
           <script>document.write(renderImg(getComputedStyle(document.documentElement).getPropertyValue('--photo-06').replace(/"/g, '').trim()))</script>
           <div class="memory-caption">An unbreakable bond 🌺</div>
@@ -534,6 +739,35 @@
     </div>
 
     <p>Remember this day? All of us in the water, laughing. That easy joy — it is still there. It is waiting. We just need to find our way back to it together.</p>
+    
+    <div class="divider-emoji">✨</div>
+
+    <!-- ── MEMORIES SCRAPBOOK SECTION ── -->
+    <div class="scrapbook-section">
+      <span class="section-badge" style="background: var(--primary); color: #fff;">Our Scrapbook</span>
+      <h2 class="section-title" style="justify-content: center;">🌸 21 Cherished Memories</h2>
+      <p style="text-align: center; margin-bottom: 10px; font-size: 15px; color: var(--text-muted);">
+        Every milestone, every smile, and every little moment we've shared through the years.
+      </p>
+
+      <div class="carousel-container">
+        <button class="carousel-btn prev" id="carousel-prev" aria-label="Previous Memory">‹</button>
+        <div class="carousel-track-wrapper">
+          <div class="carousel-track" id="carousel-track">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+        <button class="carousel-btn next" id="carousel-next" aria-label="Next Memory">›</button>
+      </div>
+
+      <div class="carousel-indicators" id="carousel-indicators">
+        <!-- Dynamically populated via JS -->
+      </div>
+      <div>
+        <span class="carousel-info" id="carousel-info">Loading memories...</span>
+      </div>
+    </div>
+
   </div>
 
   <div class="cozy-footer">
@@ -548,11 +782,36 @@
 </div>
 
 <script>
+  // List of all 20 memories
+  const memories = [
+    { id: '--photo-01', caption: 'Little Antarappa — baby Krishna, full of joy 🪔' },
+    { id: '--photo-02', caption: 'Your very first birthday — Dadu was right there 🎂' },
+    { id: '--photo-03', caption: 'October 2, 2025 — the phone gifted, in trust 📱' },
+    { id: '--photo-04', caption: 'KPL Season 4 Winners — May 2025 🏆' },
+    { id: '--photo-05', caption: 'The scooter puja — Mummy, you, and a family\'s love 🛵' },
+    { id: '--photo-06', caption: 'Raksha Bandhan — the bond that does not break 🌺' },
+    { id: '--photo-07', caption: 'Our family in maroon — sweet moments together 🤎' },
+    { id: '--photo-08', caption: 'Dadu, Antarappa, and family — always in your corner 🤝' },
+    { id: '--photo-09', caption: 'Completing the puzzle together — June 2024 🧩' },
+    { id: '--photo-10', caption: 'Waterpark fun! — May 2024 🌊' },
+    { id: '--photo-11', caption: 'Art by Antarappa — creativity always yours 🎨' },
+    { id: '--photo-12', caption: 'The photo frame you made — "Family. Sweet Memories." 🖼' },
+    { id: '--photo-13', caption: 'Your handwritten birthday card to Mummy 💛' },
+    { id: '--photo-14', caption: 'Your rangoli — chosen with care 🪔' },
+    { id: '--photo-15', caption: 'Constitution Day poster — Nov 2024, your thoughtful artwork 🇮🇳' },
+    { id: '--photo-16', caption: 'Taluk Rank Winner — your brilliance recognised 🥇' },
+    { id: '--photo-17', caption: 'Our family — together always, through everything 💙' },
+    { id: '--photo-18', caption: 'Science museum trips 🔬' },
+    { id: '--photo-19', caption: 'Dadu giving cake! 🎂' },
+    { id: '--photo-20', caption: 'Convocation Day — every 5am Tiffin led here 🎓' },
+    { id: '--photo-21', caption: 'ChatGPT Message — borrow tools, not conviction 🤖' }
+  ];
+
   function getPhotoId(variableName) {
     return getComputedStyle(document.documentElement).getPropertyValue(variableName).replace(/"/g, '').trim();
   }
 
-  function openLightbox(driveId, caption) {
+  function openLightbox(driveId, caption, event) {
     const lb = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const cap = document.getElementById('lightbox-caption');
@@ -561,6 +820,11 @@
     cap.textContent = caption;
     lb.classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    // Trigger confetti burst at click position
+    if (event && window.confetti) {
+      window.confetti.burst(event.clientX, event.clientY, 40);
+    }
   }
 
   function closeLightbox(e) {
@@ -571,6 +835,252 @@
   }
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({ target: document.getElementById('lightbox') }); });
+
+  /* ── CAROUSEL SCRAPBOOK INITIALIZER ── */
+  function initCarousel() {
+    const track = document.getElementById('carousel-track');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    const indicatorsContainer = document.getElementById('carousel-indicators');
+    const infoSpan = document.getElementById('carousel-info');
+    
+    if (!track) return;
+
+    // Dynamically render carousel cards
+    memories.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.className = 'carousel-card';
+      card.onclick = (e) => openLightbox(getPhotoId(item.id), item.caption, e);
+      
+      const photoIdValue = getPhotoId(item.id);
+      card.innerHTML = `
+        <div class="memory-wrapper" style="width: 100%;">
+          <img src="https://drive.google.com/thumbnail?id=${photoIdValue}&sz=w800" 
+               onerror="this.parentNode.innerHTML='<div class=\\'photo-placeholder\\'><span>📷</span>Secure Image Asset<br><small>Drive ID: ${photoIdValue}</small></div>'">
+          <div class="memory-caption" style="font-size: 12px; min-height: 36px; display: flex; align-items: center; justify-content: center; line-height: 1.4;">${item.caption}</div>
+        </div>
+      `;
+      track.appendChild(card);
+      
+      // Create dot indicators
+      const dot = document.createElement('div');
+      dot.className = `indicator-dot ${index === 0 ? 'active' : ''}`;
+      dot.onclick = () => {
+        const cards = track.getElementsByClassName('carousel-card');
+        if (cards[index]) {
+          cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      };
+      indicatorsContainer.appendChild(dot);
+    });
+
+    const updateStatus = () => {
+      const cards = track.getElementsByClassName('carousel-card');
+      if (cards.length === 0) return;
+      
+      // Find which card is closest to center of the track viewport
+      const trackRect = track.getBoundingClientRect();
+      const trackCenter = trackRect.left + trackRect.width / 2;
+      
+      let closestIndex = 0;
+      let minDiff = Infinity;
+      
+      Array.from(cards).forEach((card, index) => {
+        const cardRect = card.getBoundingClientRect();
+        const cardCenter = cardRect.left + cardRect.width / 2;
+        const diff = Math.abs(trackCenter - cardCenter);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestIndex = index;
+        }
+      });
+      
+      // Update dots
+      const dots = indicatorsContainer.getElementsByClassName('indicator-dot');
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].classList.toggle('active', i === closestIndex);
+      }
+      
+      // Update text
+      infoSpan.textContent = `Memory ${closestIndex + 1} of ${memories.length}`;
+    };
+
+    track.addEventListener('scroll', () => {
+      // Debounce slightly or just update on scroll
+      updateStatus();
+    });
+    
+    prevBtn.onclick = () => {
+      const cards = track.getElementsByClassName('carousel-card');
+      if (cards.length === 0) return;
+      const cardWidth = cards[0].offsetWidth + 20; // card width + gap
+      track.scrollBy({ left: -cardWidth * 2, behavior: 'smooth' });
+    };
+    
+    nextBtn.onclick = () => {
+      const cards = track.getElementsByClassName('carousel-card');
+      if (cards.length === 0) return;
+      const cardWidth = cards[0].offsetWidth + 20;
+      track.scrollBy({ left: cardWidth * 2, behavior: 'smooth' });
+    };
+
+    // Initial status call after card loading completes
+    setTimeout(updateStatus, 300);
+    
+    // Intersection Observer for scroll-triggered confetti side-burst
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (window.confetti) {
+            window.confetti.sideBurst();
+          }
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    observer.observe(document.querySelector('.scrapbook-section'));
+  }
+
+  /* ── LIGHTWEIGHT CANVAS CONFETTI PARTICLE SYSTEM ── */
+  class ConfettiEngine {
+    constructor() {
+      this.canvas = document.getElementById('confetti-canvas');
+      if (!this.canvas) {
+        this.canvas = document.createElement('canvas');
+        this.canvas.id = 'confetti-canvas';
+        this.canvas.style.position = 'fixed';
+        this.canvas.style.top = '0';
+        this.canvas.style.left = '0';
+        this.canvas.style.width = '100vw';
+        this.canvas.style.height = '100vh';
+        this.canvas.style.pointerEvents = 'none';
+        this.canvas.style.zIndex = '9999';
+        document.body.appendChild(this.canvas);
+      }
+      this.ctx = this.canvas.getContext('2d');
+      this.particles = [];
+      this.colors = ['#ffb7b2', '#b5ead7', '#ffdac1', '#e2f0cb', '#c7ceea', '#ff9aa2', '#ffe5b4'];
+      this.active = false;
+
+      window.addEventListener('resize', () => this.resizeCanvas());
+      this.resizeCanvas();
+    }
+
+    resizeCanvas() {
+      this.canvas.width = window.innerWidth;
+      this.canvas.height = window.innerHeight;
+    }
+
+    burst(x, y, count = 40) {
+      for (let i = 0; i < count; i++) {
+        this.particles.push({
+          x: x || window.innerWidth / 2,
+          y: y || window.innerHeight / 2,
+          size: Math.random() * 8 + 4,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
+          speedX: (Math.random() - 0.5) * 12,
+          speedY: (Math.random() - 0.5) * 12 - 4,
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 8,
+          opacity: 1,
+          gravity: 0.25,
+          drag: 0.98
+        });
+      }
+
+      if (!this.active) {
+        this.active = true;
+        this.animate();
+      }
+    }
+
+    sideBurst() {
+      // Launch from bottom left corner shooting right-upwards
+      const leftCount = 45;
+      for (let i = 0; i < leftCount; i++) {
+        this.particles.push({
+          x: 0,
+          y: window.innerHeight * 0.85,
+          size: Math.random() * 8 + 5,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
+          speedX: Math.random() * 12 + 6,
+          speedY: -(Math.random() * 15 + 8),
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10,
+          opacity: 1,
+          gravity: 0.28,
+          drag: 0.97
+        });
+      }
+
+      // Launch from bottom right corner shooting left-upwards
+      const rightCount = 45;
+      for (let i = 0; i < rightCount; i++) {
+        this.particles.push({
+          x: window.innerWidth,
+          y: window.innerHeight * 0.85,
+          size: Math.random() * 8 + 5,
+          color: this.colors[Math.floor(Math.random() * this.colors.length)],
+          speedX: -(Math.random() * 12 + 6),
+          speedY: -(Math.random() * 15 + 8),
+          rotation: Math.random() * 360,
+          rotationSpeed: (Math.random() - 0.5) * 10,
+          opacity: 1,
+          gravity: 0.28,
+          drag: 0.97
+        });
+      }
+
+      if (!this.active) {
+        this.active = true;
+        this.animate();
+      }
+    }
+
+    animate() {
+      if (this.particles.length === 0) {
+        this.active = false;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        return;
+      }
+
+      requestAnimationFrame(() => this.animate());
+
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      for (let i = this.particles.length - 1; i >= 0; i--) {
+        const p = this.particles[i];
+        p.speedX *= p.drag;
+        p.speedY = p.speedY * p.drag + p.gravity;
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.rotation += p.rotationSpeed;
+        p.opacity -= 0.012;
+
+        if (p.opacity <= 0 || p.y > this.canvas.height || p.x < -20 || p.x > this.canvas.width + 20) {
+          this.particles.splice(i, 1);
+          continue;
+        }
+
+        this.ctx.save();
+        this.ctx.translate(p.x, p.y);
+        this.ctx.rotate((p.rotation * Math.PI) / 180);
+        this.ctx.globalAlpha = p.opacity;
+        this.ctx.fillStyle = p.color;
+        
+        // Draw confetti piece (slender rectangle)
+        this.ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2);
+        this.ctx.restore();
+      }
+    }
+  }
+
+  // Initialize script elements on load
+  window.addEventListener('DOMContentLoaded', () => {
+    window.confetti = new ConfettiEngine();
+    initCarousel();
+  });
 </script>
 </body>
 </html>
